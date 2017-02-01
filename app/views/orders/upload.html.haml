@@ -2,26 +2,26 @@
   Upload a file
 %hr
 
-= form_for @course, url: upload_course_path, method: :post, html: { multipart: true, id: "fileupload" } do |f|
+= form_for @order, url: upload_order_path, method: :post, html: { multipart: true, id: "fileupload" } do |f|
   .row
     %h3
-      Course name
+      order file id
     .padding-left
-      = @course.name
+      = @order.name
   
   .row.empty-space
 
   .row 
-    - unless @course.status == 'uploading'
+    - unless @order.status == 'uploading'
       .alert.alert-success.smaller-text
         To begin an upload, please first select a file from your computer.
     - else
       .alert.alert-warning.smaller-text
         The system detected an unfinished upload. To resume it, please select the same file and press the green button. <br />
-        Resume not working or receiving error messages? Then please click #{link_to 'here', reset_upload_course_path(@course)} to delete the temoporary file and start over.
+        Resume not working or receiving error messages? Then please click #{link_to 'here', reset_upload_order_path(@order)} to delete the temoporary file and start over.
 
   .row.fileupload-buttonbar
-    #js-data{ data: { course: @course.id } }
+    #js-data{ data: { order: @order.id } }
     .col-lg-7
       .btn.btn-primary.fileinput-button
         %i.glyphicon.glyphicon-plus
@@ -33,9 +33,9 @@
 
 :javascript
   $(document).ready(function () {
-    var course_id = $('#js-data').data('course');
+    var order_id = $('#js-data').data('order');
     var controller_name = $('body').data('controller');
-    var model_instance_path = '/' + controller_name + '/' + course_id;
+    var model_instance_path = '/' + controller_name + '/' + order_id;
     var resume_path = model_instance_path + '/resume_upload';
     var update_status_path = model_instance_path + '/update_status';
 

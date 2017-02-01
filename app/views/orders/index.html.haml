@@ -1,0 +1,10 @@
+%h1 
+  = link_to 'Upload a new order file', new_order_path, class: "btn btn-large btn-success"
+%hr
+.padding-bottom
+
+
+- @orders.each do |order|
+  .row
+    = link_to order.name, order
+

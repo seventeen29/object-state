@@ -1,6 +1,6 @@
-class CreateCourses < ActiveRecord::Migration
+class CreateOrders < ActiveRecord::Migration
   def change
-    create_table :courses do |t|
+    create_table :orders do |t|
       t.string :name, null: false
       t.string :status, null: false, index: true
       t.attachment :upload

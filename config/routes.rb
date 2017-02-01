@@ -3,15 +3,15 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'courses#index'
+  root 'orders#index'
 
-  resources :courses do
-    member do 
-      get 'upload', to: 'courses#upload'
-      patch 'upload', to: 'courses#do_upload'
-      get 'resume_upload', to: 'courses#resume_upload'
-      patch 'update_status', to: 'courses#update_status'
-      get 'reset_upload', to: 'courses#reset_upload'
+  resources :orders do
+    member do
+      get 'upload', to: 'orders#upload'
+      patch 'upload', to: 'orders#do_upload'
+      get 'resume_upload', to: 'orders#resume_upload'
+      patch 'update_status', to: 'orders#update_status'
+      get 'reset_upload', to: 'orders#reset_upload'
     end
   end
   # Example of regular route:

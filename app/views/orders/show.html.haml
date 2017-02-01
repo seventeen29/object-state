@@ -1,0 +1,47 @@
+%h4
+.padding-left
+  .row
+    = link_to content_tag(:i, "", class: "glyphicon glyphicon-download") + " Download", @order.upload.url, class: "btn btn-large btn-success"
+    = @order.upload_file_name + " (" + number_to_human_size(@order.upload_file_size.to_s) + ")"
+
+  .row.empty-space
+
+  = form_tag order_path, method: 'get' do
+    .row
+      .col-md-1
+        Id
+      .col-md-2
+        = text_field_tag :object_id
+    .row
+      .col-md-1
+        Type
+      .col-md-2
+        = text_field_tag :object_type
+    .row
+      .col-md-1
+        Timestamp
+      .col-md-2
+        = text_field_tag :timestamp
+    .row.empty-space
+    .row
+      = submit_tag "Filter", class: "btn btn-lg btn-primary"
+
+
+  .row.empty-space
+
+  - if params['commit'] == 'Filter'
+    - timestamp = Integer(params['timestamp']) rescue nil
+    - object_id = Integer(params['object_id']) rescue nil
+    - unless object_id.nil? || timestamp.nil? || params['timestamp'].empty? || params['object_type'].nil? || params['object_type'].empty?
+      .row
+        Query:
+      = "#{params.slice(:object_id, :object_type, :timestamp)}"
+      - record = Eventstate.where(order_id: @order.id, object_type: params['object_type'].downcase, object_id: params['object_id']).where("timestamp <= ?", params['timestamp']).order(timestamp: 'desc').limit(1).first
+
+      .row.empty-space
+      .row
+        Result:
+      .row
+        = record.nil? ? "{} # Object Didn't Exist at that time." : record['object_changes']
+    - else
+      Invalid Params
